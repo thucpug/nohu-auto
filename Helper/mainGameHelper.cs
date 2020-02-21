@@ -91,49 +91,52 @@ namespace _AutoTx_Projecgt.Helper
         }
         public void loginGame(string Name, string Pass, string Argent)
         {
-            //Init(regererGame, Argent);
-            //var responHtml = request.Get("https://nohu365.club/").ToString();
-            //string action = Regex.Matches(responHtml, @"(?<=action=""/).*?(?="")", RegexOptions.Singleline)[0].Value;
-
-            //string r = Regex.Matches(responHtml, @"(?<=value="").*?(?="")", RegexOptions.Singleline)[0].Value;
-
-            //string jschl_vc = Regex.Matches(responHtml, @"(?<=value="").*?(?="")", RegexOptions.Singleline)[1].Value;
-
-            //string pass = Regex.Matches(responHtml, @"(?<=value="").*?(?="")", RegexOptions.Singleline)[2].Value;
-
-            //string boby = "r=" + WebUtility.UrlEncode(r) + "&jschl_vc=" + WebUtility.UrlEncode(jschl_vc) + "&pass=" + WebUtility.UrlEncode(pass) + "&jschl-answer=40.4873049370";
-            //string urlurl = "https://nohu365.club/" + action;
-            //var responHtml1 = request.Post(urlurl, boby, "application/x-www-form-urlencoded").ToString();
-
-            //string resToken = Regex.Matches(responHtml1, @"(?<=__RequestVerificationToken).*?(?="" />)", RegexOptions.Singleline)[0].Value;
-            //string __requesttoken = resToken.Substring(resToken.LastIndexOf('"') + 1);
-            //string strgetKet = "acc=" + Name + "&pass=" + Pass + "&key1=14f13611d275268146ed88aefaf7e7d3&__RequestVerificationToken=" + __requesttoken;
-            //var getKey = request.Post("https://nohu365.club/home/getkey", strgetKet, contentType);
-            //jsonGetKey tempGetKey = JsonConvert.DeserializeObject<jsonGetKey>(getKey.ToString());
-            //string dataLogin = "{\"AccountName\":" + '"' + Name + '"' + ",\"md5\":" + '"' + Pass + '"' + ",\"Captcha\":\"\",\"Verify\":\"\",\"clientTime\":" + '"' + tempGetKey.stime + '"' + ",\"sign\":" + '"' + tempGetKey.sig + '"' + "}";
-            //var res = request.Post("https://nohu365.club/w-portapi/acc/Login", dataLogin, "application/json; charset=UTF-8").ToString();
-            //jsonCheckAccountInforNohu rep = JsonConvert.DeserializeObject<jsonCheckAccountInforNohu>(res);
-            //momentStatusAccount.Moneystart = rep.BalanceGold;
             Init(regererGame, Argent);
-            string initHtml = request.Get("https://nohu365.club/").ToString();
-            File.WriteAllText("code.html", initHtml);
-            Process.Start("code.exe");
+    
+            var responHtml = request.Get("https://nohu365.club/").ToString();
             Thread.Sleep(5000);
-            string link = File.ReadAllText("Link.txt");
-            string Data = File.ReadAllText("Data.txt");
-            initHtml = request.Post(link, Data, "application/x-www-form-urlencoded").ToString();
-            File.Delete("code.html");
-            string resToken = Regex.Matches(initHtml, @"(?<=__RequestVerificationToken).*?(?="" />)", RegexOptions.Singleline)[0].Value;
+            var responHtml2 = request.Get("https://nohu365.club/").ToString();
+            string action = Regex.Matches(responHtml, @"(?<=action=""/).*?(?="")", RegexOptions.Singleline)[0].Value;
+
+            string r = Regex.Matches(responHtml, @"(?<=value="").*?(?="")", RegexOptions.Singleline)[0].Value;
+
+            string jschl_vc = Regex.Matches(responHtml, @"(?<=value="").*?(?="")", RegexOptions.Singleline)[1].Value;
+
+            string pass = Regex.Matches(responHtml, @"(?<=value="").*?(?="")", RegexOptions.Singleline)[2].Value;
+
+            string boby = "r=" + WebUtility.UrlEncode(r) + "&jschl_vc=" + WebUtility.UrlEncode(jschl_vc) + "&pass=" + WebUtility.UrlEncode(pass) + "&jschl-answer=40.4873049370";
+            string urlurl = "https://nohu365.club/" + action;
+            var responHtml1 = request.Post(urlurl, boby, "application/x-www-form-urlencoded").ToString();
+
+            string resToken = Regex.Matches(responHtml1, @"(?<=__RequestVerificationToken).*?(?="" />)", RegexOptions.Singleline)[0].Value;
             string __requesttoken = resToken.Substring(resToken.LastIndexOf('"') + 1);
-            string dataGetkey = "acc=" + Name + "&pass=" + Pass + "&key1=14f13611d275268146ed88aefaf7e7d3&__RequestVerificationToken=" + __requesttoken;
-            dataGetkey = request.Post("https://nohu365.club/home/getkey", dataGetkey, "application/x-www-form-urlencoded; charset=UTF-8").ToString();
-            jsonGetKey jsonKey = JsonConvert.DeserializeObject<jsonGetKey>(dataGetkey);
-            string dataLogin = "{\"AccountName\":" + '"' + Name + '"' + ",\"md5\":" + '"' + Pass + '"' + ",\"Captcha\":\"\",\"Verify\":\"\",\"clientTime\":" + '"' + jsonKey.stime + '"' + ",\"sign\":" + '"' + jsonKey.sig + '"' + "}";
+            string strgetKet = "acc=" + Name + "&pass=" + Pass + "&key1=14f13611d275268146ed88aefaf7e7d3&__RequestVerificationToken=" + __requesttoken;
+            var getKey = request.Post("https://nohu365.club/home/getkey", strgetKet, contentType);
+            jsonGetKey tempGetKey = JsonConvert.DeserializeObject<jsonGetKey>(getKey.ToString());
+            string dataLogin = "{\"AccountName\":" + '"' + Name + '"' + ",\"md5\":" + '"' + Pass + '"' + ",\"Captcha\":\"\",\"Verify\":\"\",\"clientTime\":" + '"' + tempGetKey.stime + '"' + ",\"sign\":" + '"' + tempGetKey.sig + '"' + "}";
             var res = request.Post("https://nohu365.club/w-portapi/acc/Login", dataLogin, "application/json; charset=UTF-8").ToString();
             jsonCheckAccountInforNohu rep = JsonConvert.DeserializeObject<jsonCheckAccountInforNohu>(res);
-            int moneyStart = rep.BalanceGold;
-            Console.WriteLine(moneyStart);
-            connectWSTX();
+            momentStatusAccount.Moneystart = rep.BalanceGold;
+            //Init(regererGame, Argent);
+            //string initHtml = request.Get("https://nohu365.club/").ToString();
+            //File.WriteAllText("code.html", initHtml);
+            //Process.Start("code.exe");
+            //Thread.Sleep(5000);
+            //string link = File.ReadAllText("Link.txt");
+            //string Data = File.ReadAllText("Data.txt");
+            //initHtml = request.Post(link, Data, "application/x-www-form-urlencoded").ToString();
+            //File.Delete("code.html");
+            //string resToken = Regex.Matches(initHtml, @"(?<=__RequestVerificationToken).*?(?="" />)", RegexOptions.Singleline)[0].Value;
+            //string __requesttoken = resToken.Substring(resToken.LastIndexOf('"') + 1);
+            //string dataGetkey = "acc=" + Name + "&pass=" + Pass + "&key1=14f13611d275268146ed88aefaf7e7d3&__RequestVerificationToken=" + __requesttoken;
+            //dataGetkey = request.Post("https://nohu365.club/home/getkey", dataGetkey, "application/x-www-form-urlencoded; charset=UTF-8").ToString();
+            //jsonGetKey jsonKey = JsonConvert.DeserializeObject<jsonGetKey>(dataGetkey);
+            //string dataLogin = "{\"AccountName\":" + '"' + Name + '"' + ",\"md5\":" + '"' + Pass + '"' + ",\"Captcha\":\"\",\"Verify\":\"\",\"clientTime\":" + '"' + jsonKey.stime + '"' + ",\"sign\":" + '"' + jsonKey.sig + '"' + "}";
+            //var res = request.Post("https://nohu365.club/w-portapi/acc/Login", dataLogin, "application/json; charset=UTF-8").ToString();
+            //jsonCheckAccountInforNohu rep = JsonConvert.DeserializeObject<jsonCheckAccountInforNohu>(res);
+            //int moneyStart = rep.BalanceGold;
+            //Console.WriteLine(moneyStart);
+            //connectWSTX();
         }
         public int CheckMoneyPfrofit(Int32 moneyStart)
         {
